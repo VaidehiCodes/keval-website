@@ -16,6 +16,7 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+
 const socials = [
   {
     label: "Instagram",
