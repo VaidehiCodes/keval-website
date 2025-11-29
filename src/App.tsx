@@ -94,12 +94,12 @@ const writtenPieces = [
 
 const contactChannels = [
   {
-    label: "Email",
+    label: "Primary Email",
     detail: "kevaldave1112@gmail.com",
     href: "mailto:kevaldave1112@gmail.com",
   },
   {
-    label: "Email",
+    label: "Education Email",
     detail: "dave.kev@northeastern.edu",
     href: "mailto:dave.kev@northeastern.edu",
   },
