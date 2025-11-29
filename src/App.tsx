@@ -47,12 +47,19 @@ const videoProjects = [
     description:
       "This is a short video project created for the Fundamentals of Digital Journalism course. As part of the assignment, our team visited and spent time at the Boston City Archives to learn about what the archives are, what they do, and how they function as a vital resource for the city’s history and records. Through this experience, we were able to get a behind-the-scenes look at how Boston preserves its past and makes it accessible to the public.\n\nSpecial thanks to Kristen Lafferty, City Archivist, for sharing her time and insights with us.",
     url: "https://youtu.be/8s6jkOJUwWc?si=1GZoQQ7tEXiFARBF",
+    skills: ["Video Production", "Interviewing", "Storyboarding", "Editing"],
   },
   {
     title: "News bulletin",
     description:
       "This news bulletin delivers a balanced and engaging mix of national headlines, election-related coverage of the upcoming general election, local college sports updates, and a concluding movie review, offering viewers both information and entertainment while building skills in news writing, presentation, media production, and audience engagement for a college-focused audience.",
     url: "https://youtu.be/haYU4IcoLzU?si=KbhWSj-_JqWaNo8-",
+    skills: [
+      "Scriptwriting",
+      "On-camera Presentation",
+      "Video Editing",
+      "Research",
+    ],
   },
 ];
 
@@ -62,12 +69,14 @@ const audioStories = [
     description:
       "This podcast explores the culture of street performance in Boston through the experiences of musician Marshall Morgan, highlighting his interactions with the public and the role of street music in shaping the city’s creative identity. It aims to capture how public art fosters community connection, preserves local musical tradition, and reflects the everyday rhythm of urban life.",
     url: "https://soundcloud.com/keval-dave-462621124/podcast-assignment?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+    skills: ["Field Recording", "Interviewing", "Editing", "Sound Design"],
   },
   {
     title: "Piku Movie Review",
     description:
       "This review explores the heartwarming and humorous essence of Piku, a film that beautifully captures the complexities of family relationships, everyday responsibilities, and emotional connection. Through personal reflection and scene analysis, I discuss how the characters, especially Piku and her father, reveal the realities of caregiving, independence, and love in their simplest forms. The review highlights standout performances, subtle storytelling, and the film’s unique ability to turn ordinary moments into meaningful narrative.",
     url: "https://soundcloud.com/keval-dave-462621124/piku-movie-review?si=f7146701716343b19eef9ceb84863c2e&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+    skills: ["Scriptwriting", "Narration", "Audio Editing", "Critique"],
   },
 ];
 
@@ -297,6 +306,16 @@ export function App() {
                             </p>
                           )}
 
+                          {Array.isArray(video.skills) &&
+                            video.skills.length > 0 && (
+                              <p
+                                className="text-sm text-slate-700 mt-4"
+                                aria-label="Skills used"
+                              >
+                                {video.skills.join(" • ")}
+                              </p>
+                            )}
+
                           <div className="resource-card__actions mt-6">
                             {video.url ? (
                               <a
@@ -358,6 +377,16 @@ export function App() {
                             </p>
                           )}
 
+                          {Array.isArray(video.skills) &&
+                            video.skills.length > 0 && (
+                              <p
+                                className="text-sm text-slate-700 mt-4"
+                                aria-label="Skills used"
+                              >
+                                {video.skills.join(" • ")}
+                              </p>
+                            )}
+
                           <div className="resource-card__actions mt-6">
                             {video.url ? (
                               <a
@@ -411,6 +440,16 @@ export function App() {
                               {story.description}
                             </p>
                           )}
+
+                          {Array.isArray(story.skills) &&
+                            story.skills.length > 0 && (
+                              <p
+                                className="text-sm text-slate-700 mt-4"
+                                aria-label="Skills used"
+                              >
+                                {story.skills.join(" • ")}
+                              </p>
+                            )}
 
                           <div className="resource-card__actions mt-6">
                             <a
@@ -468,6 +507,16 @@ export function App() {
                               {story.description}
                             </p>
                           )}
+
+                          {Array.isArray(story.skills) &&
+                            story.skills.length > 0 && (
+                              <p
+                                className="text-sm text-slate-700 mt-4"
+                                aria-label="Skills used"
+                              >
+                                {story.skills.join(" • ")}
+                              </p>
+                            )}
 
                           <div className="resource-card__actions mt-6">
                             <a
