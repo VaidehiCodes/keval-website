@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import "./index.css";
 import resumePdf from "./assets/Keval's Resume (1).pdf";
 import newspaperPdf from "./assets/newspaper final.pdf";
@@ -155,7 +155,6 @@ const SectionHeading = ({
 );
 
 export function App() {
-  const [showContactDetails, setShowContactDetails] = useState(false);
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -527,57 +526,33 @@ export function App() {
           </div>
         </section>
 
-        <section id="contact" className="section">
-          <div className="max-w-3xl mx-auto" data-scroll="fade-up">
-            <div className="rounded-xl p-10 bg-slate-900 text-white text-center">
-              <h2 className="text-3xl md:text-4xl font-serif mb-4">
-                Let’s Connect!
-              </h2>
-              <p className="text-base text-slate-200 max-w-xl mx-auto mb-8">
-                I'm always excited to collaborate on projects that push the
-                boundaries of digital storytelling.
-              </p>
+        <section id="contact" className="section contact">
+          <div className="contact-details" data-scroll="fade-up">
+            <SectionHeading
+              eyebrow="Contact Me"
+              description="I'm always excited to collaborate on projects that push the boundaries of digital storytelling."
+            />
+            {/* Buttons row */}
+            <div
+              className="flex flex-col sm:flex-row gap-4 mt-6"
+              data-scroll="fade-up"
+            >
+              {/* Expand contacts button */}
+              <ExpandContactsButton />
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button
-                  className="btn-primary px-8 py-3"
-                  onClick={() => setShowContactDetails((s) => !s)}
-                >
-                  {showContactDetails ? "Hide contact" : "Get In Touch"}
-                </button>
-
-                <a
-                  className="btn-outline px-8 py-3"
-                  href={resumeResource.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Download Resume
-                </a>
-              </div>
-
-              {showContactDetails && (
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-slate-100">
-                  {contactChannels.map((ch) => (
-                    <div key={ch.detail} className="text-left">
-                      <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                        {ch.label}
-                      </p>
-                      {ch.href ? (
-                        <a
-                          href={ch.href}
-                          className="text-lg block text-white underline"
-                        >
-                          {ch.detail}
-                        </a>
-                      ) : (
-                        <p className="text-lg">{ch.detail}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              {/* Download resume button */}
+              <a
+                href={resumeResource.url}
+                target="_blank"
+                rel="noreferrer"
+                className="contact-cta contact-cta--outline"
+              >
+                View Resume
+              </a>
             </div>
+
+            {/* Expandable panel */}
+            <ContactsPanel />
           </div>
         </section>
       </main>
@@ -596,3 +571,74 @@ export function App() {
 }
 
 export default App;
+
+// Local UI components for contact section
+function ExpandContactsButton() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const panel = document.getElementById("contact-panel");
+    if (!panel) return;
+    panel.setAttribute("data-open", open ? "true" : "false");
+  }, [open]);
+
+  return (
+    <button
+      type="button"
+      className="contact-cta contact-cta--outline"
+      aria-expanded={open}
+      aria-controls="contact-panel"
+      onClick={() => setOpen((v) => !v)}
+    >
+      {open ? "Hide Contacts" : "Get In Touch"}
+    </button>
+  );
+}
+
+function ContactsPanel() {
+  return (
+    <div
+      id="contact-panel"
+      className="contact-panel"
+      data-open="false"
+      data-scroll="fade-up"
+    >
+      {contactChannels.map((channel, index) => (
+        <div
+          key={`${channel.label}-${channel.detail}`}
+          className="contact-row"
+          style={scrollDelay(index, 0.04)}
+        >
+          <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
+            {channel.label}
+          </p>
+          {channel.label.toLowerCase() === "linkedin" ? (
+            <a
+              href={channel.href}
+              aria-label="LinkedIn profile"
+              className="inline-flex items-center mt-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="text-slate-800"
+              >
+                <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5V16.9c0-1.69-.03-3.87-2.36-3.87-2.36 0-2.73 1.84-2.73 3.74V24h-5V8z" />
+              </svg>
+            </a>
+          ) : channel.href ? (
+            <a href={channel.href} className="text-lg text-slate-800 underline">
+              {channel.detail}
+            </a>
+          ) : (
+            <p className="text-lg text-slate-800">{channel.detail}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
