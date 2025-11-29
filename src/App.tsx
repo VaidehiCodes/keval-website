@@ -119,11 +119,7 @@ const contactChannels = [
   },
 ];
 
-const stats = [
-  { value: "18", label: "Audience research sprints" },
-  { value: "26", label: "Narrative systems delivered" },
-  { value: "4", label: "Cities prototyping stories" },
-];
+// stats removed per request
 
 /* projects removed per request */
 
@@ -249,21 +245,7 @@ export function App() {
           </div>
         </div>
 
-        <div className="hero-stats">
-          {stats.map((item, index) => (
-            <div
-              key={item.label}
-              className="hero-stat"
-              data-scroll="fade-up"
-              style={scrollDelay(index, 0.05)}
-            >
-              <p className="text-4xl font-serif text-slate-900">{item.value}</p>
-              <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
-                {item.label}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Stats removed per request */}
       </header>
 
       <main className="space-y-28 pb-24">
