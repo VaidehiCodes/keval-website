@@ -6,16 +6,12 @@ import memoPdf from "./assets/what should they do memo assignment keval (1) (3).
 import dissertationPdf from "./assets/Disssertation.pdf";
 
 const navLinks = [
-  { label: "About me", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Services", href: "#services" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "About me", href: "#top" },
   { label: "Videos", href: "#videos" },
   { label: "Audio", href: "#audio" },
   { label: "Written", href: "#written" },
   { label: "Contact", href: "#contact" },
 ];
-
 
 const socials = [
   {
@@ -120,71 +116,9 @@ const stats = [
   { value: "4", label: "Cities prototyping stories" },
 ];
 
-const projects = [
-  {
-    title: "Civic Memory Campaign",
-    client: "City of Boston Archives",
-    description:
-      "Built the narrative spine, video treatment, and owned-channel rollout celebrating preservation work across neighborhoods.",
-    tags: ["Strategy", "Content", "Video"],
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Movement Residency Journal",
-    client: "Northeastern Media Innovation",
-    description:
-      "A data-informed editorial series translating research sprints into human stories for prospective fellows.",
-    tags: ["Editorial", "Research", "Product"],
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    title: "Quiet Corners Field Guide",
-    client: "Independent Documentary",
-    description:
-      "Content architecture + launch kit supporting the Ahmedabad short film and its companion walking map.",
-    tags: ["Campaign", "Experiential", "Story"],
-    image:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80",
-  },
-];
+/* projects removed per request */
 
-const services = [
-  {
-    title: "Brand & media strategy",
-    detail:
-      "Research-backed positioning, message houses, and rollout plans that align newsroom rigor with business goals.",
-    result: "Keeps every channel aligned around one narrative.",
-  },
-  {
-    title: "Content system design",
-    detail:
-      "Editorial calendars, modular storytelling kits, and creative direction that teams can scale across platforms.",
-    result: "Delivers consistent voice & visual language.",
-  },
-  {
-    title: "Data-led storytelling",
-    detail:
-      "Dashboards, audience insights, and measurement loops translating analytics into creative decisions.",
-    result: "Turns metrics into memorable stories.",
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "Keval guided our archive relaunch with a rare blend of empathy and analytical clarity. Every asset felt intentional.",
-    author: "Marisol Lee",
-    role: "Communications Lead, Boston City Archives",
-  },
-  {
-    quote:
-      "From research synthesis to launch copy, the residency journal carried a consistent pulse that kept stakeholders aligned.",
-    author: "Dr. Evan Price",
-    role: "Director, Media Innovation Lab",
-  },
-];
+/* services removed per request */
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -205,7 +139,7 @@ const SectionHeading = ({
 }: SectionHeadingProps) => (
   <div className="space-y-3 max-w-2xl" data-scroll="fade-up">
     {eyebrow && (
-      <p className="text-sm uppercase tracking-[0.35em] text-stone-500">
+      <p className="text-3xl md:text-4xl uppercase tracking-[0.35em] text-stone-500">
         {eyebrow}
       </p>
     )}
@@ -276,24 +210,13 @@ export function App() {
 
         <div className="hero-grid">
           <div className="space-y-8" data-scroll="fade-up">
-            <p className="text-sm uppercase tracking-[0.4em] text-stone-500">
-              Media innovation 2025
-            </p>
-            <h1 className="text-4xl md:text-6xl font-serif text-slate-900 leading-tight">
-              Journalism-rooted strategy for thoughtful brands.
-            </h1>
-            <p className="text-lg text-slate-600 md:w-3/4 leading-relaxed">
-              I merge reporting discipline, economics training, and digital
-              experimentation to design narrative systems that feel human and
-              land with measurable impact across channels.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a className="btn-primary" href="#projects">
-                See strategy work
-              </a>
-              <a className="btn-secondary" href="#videos">
-                Read journal
-              </a>
+            <SectionHeading eyebrow="About me" />
+            <div className="text-base text-slate-600 leading-relaxed">
+              {aboutParagraphs.map((paragraph, i) => (
+                <p key={`hero-about-${i}`} data-scroll="fade-up">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
 
@@ -335,141 +258,9 @@ export function App() {
       </header>
 
       <main className="space-y-28 pb-24">
-        <section id="about" className="section about">
-          <SectionHeading eyebrow="About me" title="About me" />
-          <div className="about-grid">
-            <div className="space-y-5">
-              {aboutParagraphs.map((paragraph) => (
-                <p
-                  key={paragraph}
-                  className="text-base text-slate-600 leading-relaxed"
-                  data-scroll="fade-up"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-            <div className="about-card" data-scroll="fade-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
-                Currently
-              </p>
-              <p className="text-lg font-semibold text-slate-900">
-                M.S. Media Innovation + Data Communication
-              </p>
-              <p className="text-sm text-slate-600">
-                Northeastern University · Boston, MA
-              </p>
-              <div className="about-card__resource">
-                <p className="text-base text-slate-800">
-                  {resumeResource.label}
-                </p>
-                {resumeResource.url ? (
-                  <a
-                    className="resource-link"
-                    href={resumeResource.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open link
-                  </a>
-                ) : (
-                  <p className="resource-note">Link not provided</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-        <section id="projects" className="section">
-          <SectionHeading
-            eyebrow="Case Studies"
-            title="Strategy & storytelling systems"
-            description="Select collaborations translating research, narrative, and multimedia craft into cohesive launches."
-          />
-          <div className="project-grid">
-            {projects.map((project, index) => (
-              <article
-                key={project.title}
-                className="project-card"
-                data-scroll="fade-up"
-                style={scrollDelay(index)}
-              >
-                <figure className="project-card__media">
-                  <img src={project.image} alt={project.title} />
-                </figure>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-stone-500">
-                    <span>{project.client}</span>
-                    <span>{project.tags.join(" • ")}</span>
-                  </div>
-                  <h3 className="text-2xl font-serif text-slate-900">
-                    {project.title}
-                  </h3>
-                  <p className="text-base text-slate-600 leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* Projects section removed */}
 
-        <section id="services" className="section services">
-          <SectionHeading
-            eyebrow="Capabilities"
-            title="What I build"
-            description="Offerings that pair newsroom sensibilities with market insight."
-          />
-          <div className="service-grid">
-            {services.map((service, index) => (
-              <article
-                key={service.title}
-                className="service-card"
-                data-scroll="fade-up"
-                style={scrollDelay(index)}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-slate-900">
-                    {service.title}
-                  </h3>
-                  <span className="text-xs uppercase tracking-[0.35em] text-stone-400">
-                    —
-                  </span>
-                </div>
-                <p className="text-base text-slate-600 leading-relaxed">
-                  {service.detail}
-                </p>
-                <p className="text-sm font-medium text-slate-900">
-                  {service.result}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="testimonials" className="section">
-          <SectionHeading
-            eyebrow="Testimonials"
-            title="Collected words from collaborators"
-            description="Notes from teams who trusted me with their story and strategy."
-          />
-          <div className="testimonial-grid">
-            {testimonials.map((testimonial, index) => (
-              <figure
-                key={testimonial.author}
-                className="testimonial-card"
-                data-scroll="fade-up"
-                style={scrollDelay(index)}
-              >
-                <blockquote className="text-lg leading-relaxed text-slate-700">
-                  “{testimonial.quote}”
-                </blockquote>
-                <figcaption className="text-sm uppercase tracking-[0.35em] text-stone-500">
-                  {testimonial.author} · {testimonial.role}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
+        {/* Services section removed */}
 
         <section id="videos" className="section">
           <SectionHeading title="Video :" />
