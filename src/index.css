@@ -534,3 +534,115 @@ main,
     opacity: 1 !important;
   }
 }
+
+/* Contact panel - dark themed to match mock */
+#contact .rounded-xl {
+  background: linear-gradient(180deg, #0b1220 0%, #0e1626 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+}
+
+/* Buttons inside contact only */
+#contact .btn-primary {
+  background: linear-gradient(90deg, #6d6bff 0%, #b66bff 100%);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(107, 92, 255, 0.18),
+    0 2px 0 rgba(0, 0, 0, 0.25) inset;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+#contact .btn-primary:hover {
+  filter: saturate(1.05) brightness(1.03);
+}
+
+#contact .btn-outline {
+  background: transparent;
+  color: #e6eefc;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.85rem 2rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contact .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Miniplayer waveform animation */
+.miniplayer {
+  position: relative;
+  min-height: 3rem;
+}
+.miniplayer .wave span {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.9);
+  width: 6px;
+  border-radius: 2px;
+}
+.miniplayer .wave .animate-wave {
+  animation-name: sc-wave;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes sc-wave {
+  0% {
+    transform: scaleY(0.4);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.7;
+  }
+}
+
+.delay-0 {
+  animation-delay: 0s;
+}
+.delay-1 {
+  animation-delay: 0.08s;
+}
+.delay-2 {
+  animation-delay: 0.16s;
+}
+.delay-3 {
+  animation-delay: 0.24s;
+}
+.delay-4 {
+  animation-delay: 0.32s;
+}
+.delay-5 {
+  animation-delay: 0.4s;
+}
+
+/* Ensure hidden iframe does not block interactions */
+.miniplayer iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Small responsive tweak for contact buttons */
+@media (max-width: 640px) {
+  #contact .flex {
+    flex-direction: column;
+  }
+  #contact .btn-primary,
+  #contact .btn-outline {
+    width: 100%;
+  }
+}

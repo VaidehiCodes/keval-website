@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./index.css";
 import resumePdf from "./assets/Keval's Resume (1).pdf";
 import newspaperPdf from "./assets/newspaper final.pdf";
@@ -61,7 +61,7 @@ const audioStories = [
     title: "The Uncommon Sounds of The Common",
     description:
       "This podcast explores the culture of street performance in Boston through the experiences of musician Marshall Morgan, highlighting his interactions with the public and the role of street music in shaping the city’s creative identity. It aims to capture how public art fosters community connection, preserves local musical tradition, and reflects the everyday rhythm of urban life.",
-    url: "https://on.soundcloud.com/DyTogv7ZdDbbxH5bwr",
+    url: "https://soundcloud.com/keval-dave-462621124/podcast-assignment?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
   },
   {
     title: "Piku Movie Review",
@@ -155,6 +155,7 @@ const SectionHeading = ({
 );
 
 export function App() {
+  const [showContactDetails, setShowContactDetails] = useState(false);
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -263,79 +264,234 @@ export function App() {
         {/* Services section removed */}
 
         <section id="videos" className="section">
-          <SectionHeading title="Video :" />
-          <div className="resource-grid">
-            {videoProjects.map((video, index) => (
-              <article
-                key={video.title}
-                className="resource-card"
-                data-scroll="fade-up"
-                style={scrollDelay(index)}
-              >
-                <p className="resource-tag">Video</p>
-                <h3 className="text-2xl font-serif text-slate-900">
-                  {video.title}
-                </h3>
-                {video.description && (
-                  <p className="text-base text-slate-600 leading-relaxed">
-                    {video.description}
-                  </p>
-                )}
-                <div className="resource-card__actions">
-                  {video.url ? (
-                    <a
-                      className="resource-link"
-                      href={video.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Watch film
-                    </a>
-                  ) : (
-                    <p className="resource-note">Link not provided</p>
-                  )}
-                </div>
-              </article>
-            ))}
+          <SectionHeading title="Video Projects:" />
+          <div className="space-y-12">
+            {videoProjects.map((video, index) => {
+              const idMatch = video.url?.match(
+                /(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/
+              );
+              const embedId = idMatch ? idMatch[1] : null;
+              const embedSrc = embedId
+                ? `https://www.youtube.com/embed/${embedId}`
+                : video.url;
+
+              const isNewsBulletin = /news bulletin/i.test(video.title || "");
+
+              return (
+                <article
+                  key={video.title}
+                  className="resource-card"
+                  data-scroll="fade-up"
+                  style={scrollDelay(index)}
+                >
+                  <div className="md:flex md:gap-8 items-start">
+                    {isNewsBulletin ? (
+                      <>
+                        <div className="video-meta w-full md:w-1/2">
+                          <h3 className="text-2xl font-serif text-slate-900">
+                            {video.title}
+                          </h3>
+
+                          {video.description && (
+                            <p className="text-base text-slate-600 leading-relaxed mt-4">
+                              {video.description}
+                            </p>
+                          )}
+
+                          <div className="resource-card__actions mt-6">
+                            {video.url ? (
+                              <a
+                                className="resource-link inline-block"
+                                href={video.url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Watch film
+                              </a>
+                            ) : (
+                              <p className="resource-note">Link not provided</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="video-player w-full md:w-1/2">
+                          <div
+                            className="relative"
+                            style={{ paddingTop: "56.25%" }}
+                          >
+                            <iframe
+                              src={embedSrc}
+                              title={video.title}
+                              className="absolute inset-0 w-full h-full"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="video-player w-full md:w-1/2">
+                          <div
+                            className="relative"
+                            style={{ paddingTop: "56.25%" }}
+                          >
+                            <iframe
+                              src={embedSrc}
+                              title={video.title}
+                              className="absolute inset-0 w-full h-full"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+
+                        <div className="video-meta w-full md:w-1/2">
+                          <h3 className="text-2xl font-serif text-slate-900">
+                            {video.title}
+                          </h3>
+
+                          {video.description && (
+                            <p className="text-base text-slate-600 leading-relaxed mt-4">
+                              {video.description}
+                            </p>
+                          )}
+
+                          <div className="resource-card__actions mt-6">
+                            {video.url ? (
+                              <a
+                                className="resource-link inline-block"
+                                href={video.url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Watch film
+                              </a>
+                            ) : (
+                              <p className="resource-note">Link not provided</p>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
         <section id="audio" className="section">
-          <SectionHeading title="Audio:" />
-          <div className="resource-grid">
-            {audioStories.map((story, index) => (
-              <article
-                key={story.title}
-                className="resource-card"
-                data-scroll="fade-up"
-                style={scrollDelay(index)}
-              >
-                <p className="resource-tag">Audio</p>
-                <h3 className="text-2xl font-serif text-slate-900">
-                  {story.title}
-                </h3>
-                {story.description && (
-                  <p className="text-base text-slate-600 leading-relaxed">
-                    {story.description}
-                  </p>
-                )}
-                <div className="resource-card__actions">
-                  <a
-                    className="resource-link"
-                    href={story.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Listen on SoundCloud
-                  </a>
-                </div>
-              </article>
-            ))}
+          <SectionHeading title="Audio Projects:" />
+          <div className="space-y-12">
+            {audioStories.map((story, index) => {
+              const embedSrc = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+                story.url || ""
+              )}&visual=true`;
+              const flip = index % 2 === 1; // alternate side for every second item
+
+              return (
+                <article
+                  key={story.title}
+                  className="resource-card"
+                  data-scroll="fade-up"
+                  style={scrollDelay(index)}
+                >
+                  <div className="md:flex md:gap-8 items-start">
+                    {flip ? (
+                      <>
+                        <div className="video-meta w-full md:w-1/2">
+                          <h3 className="text-2xl font-serif text-slate-900">
+                            {story.title}
+                          </h3>
+
+                          {story.description && (
+                            <p className="text-base text-slate-600 leading-relaxed mt-4">
+                              {story.description}
+                            </p>
+                          )}
+
+                          <div className="resource-card__actions mt-6">
+                            <a
+                              className="resource-link inline-block"
+                              href={story.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Listen on SoundCloud
+                            </a>
+                          </div>
+                        </div>
+
+                        <div className="video-player w-full md:w-1/2">
+                          <div
+                            className="relative"
+                            style={{ paddingTop: "56.25%" }}
+                          >
+                            <iframe
+                              src={embedSrc}
+                              title={story.title}
+                              className="absolute inset-0 w-full h-full"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="video-player w-full md:w-1/2">
+                          <div
+                            className="relative"
+                            style={{ paddingTop: "56.25%" }}
+                          >
+                            <iframe
+                              src={embedSrc}
+                              title={story.title}
+                              className="absolute inset-0 w-full h-full"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="video-meta w-full md:w-1/2">
+                          <h3 className="text-2xl font-serif text-slate-900">
+                            {story.title}
+                          </h3>
+
+                          {story.description && (
+                            <p className="text-base text-slate-600 leading-relaxed mt-4">
+                              {story.description}
+                            </p>
+                          )}
+
+                          <div className="resource-card__actions mt-6">
+                            <a
+                              className="resource-link inline-block"
+                              href={story.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Listen on SoundCloud
+                            </a>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
         <section id="written" className="section">
-          <SectionHeading title="Written:" />
+          <SectionHeading title="Written Projects:" />
           <div className="resource-grid">
             {writtenPieces.map((piece, index) => (
               <article
@@ -344,7 +500,6 @@ export function App() {
                 data-scroll="fade-up"
                 style={scrollDelay(index)}
               >
-                <p className="resource-tag">Written</p>
                 <h3 className="text-2xl font-serif text-slate-900">
                   {piece.title}
                 </h3>
@@ -372,77 +527,57 @@ export function App() {
           </div>
         </section>
 
-        <section id="contact" className="section contact">
-          <div className="contact-panel" data-scroll="fade-right">
-            <SectionHeading
-              eyebrow="Contact"
-              title="Request a collaboration"
-              description="Share what you’re building—campaign, newsroom, nonprofit—and I’ll respond within a day with next steps."
-            />
-            <form className="contact-form">
-              <label>
-                <span>Name</span>
-                <input type="text" placeholder="Your full name" required />
-              </label>
-              <label>
-                <span>Email</span>
-                <input type="email" placeholder="studio@email.com" required />
-              </label>
-              <label>
-                <span>Project focus</span>
-                <input
-                  type="text"
-                  placeholder="Runway film, lookbook, microsite…"
-                />
-              </label>
-              <label>
-                <span>Message</span>
-                <textarea
-                  placeholder="Share timeline, deliverables, or references."
-                  rows={4}
-                />
-              </label>
-              <button type="submit" className="btn-primary w-full">
-                Submit request
-              </button>
-            </form>
-            <div className="contact-socials">
-              {socials.map((social) => (
+        <section id="contact" className="section">
+          <div className="max-w-3xl mx-auto" data-scroll="fade-up">
+            <div className="rounded-xl p-10 bg-slate-900 text-white text-center">
+              <h2 className="text-3xl md:text-4xl font-serif mb-4">
+                Let’s Connect!
+              </h2>
+              <p className="text-base text-slate-200 max-w-xl mx-auto mb-8">
+                I'm always excited to collaborate on projects that push the
+                boundaries of digital storytelling.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button
+                  className="btn-primary px-8 py-3"
+                  onClick={() => setShowContactDetails((s) => !s)}
+                >
+                  {showContactDetails ? "Hide contact" : "Get In Touch"}
+                </button>
+
                 <a
-                  key={social.label}
-                  href={social.href}
+                  className="btn-outline px-8 py-3"
+                  href={resumeResource.url}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span>{social.label}</span>
-                  <strong>{social.display}</strong>
+                  Download Resume
                 </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="contact-details" data-scroll="fade-left">
-            {contactChannels.map((channel, index) => (
-              <div
-                key={`${channel.label}-${channel.detail}`}
-                data-scroll="fade-up"
-                style={scrollDelay(index, 0.06)}
-              >
-                <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
-                  {channel.label}
-                </p>
-                {channel.href ? (
-                  <a
-                    href={channel.href}
-                    className="text-lg text-slate-800 underline"
-                  >
-                    {channel.detail}
-                  </a>
-                ) : (
-                  <p className="text-lg text-slate-800">{channel.detail}</p>
-                )}
               </div>
-            ))}
+
+              {showContactDetails && (
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-slate-100">
+                  {contactChannels.map((ch) => (
+                    <div key={ch.detail} className="text-left">
+                      <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+                        {ch.label}
+                      </p>
+                      {ch.href ? (
+                        <a
+                          href={ch.href}
+                          className="text-lg block text-white underline"
+                        >
+                          {ch.detail}
+                        </a>
+                      ) : (
+                        <p className="text-lg">{ch.detail}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </section>
       </main>
