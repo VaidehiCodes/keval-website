@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type CSSProperties,
-  type MouseEvent,
-} from "react";
+import { useEffect, type CSSProperties, type MouseEvent } from "react";
 import "./index.css";
 import resumePdf from "./assets/Keval's Resume (1).pdf";
 import newspaperPdf from "./assets/newspaper final.pdf";
@@ -582,38 +577,19 @@ export function App() {
               eyebrow="Contact Me"
               description="I'm always excited to collaborate on projects that push the boundaries of digital storytelling."
             />
-            {/* Buttons row */}
-            <div
-              className="flex flex-col sm:flex-row gap-4 mt-6"
-              data-scroll="fade-up"
-            >
-              {/* Expand contacts button */}
-              <ExpandContactsButton />
-
-              {/* Download resume button */}
-              <a
-                href={resumeResource.url}
-                target="_blank"
-                rel="noreferrer"
-                className="contact-cta contact-cta--outline"
-              >
-                View Resume
-              </a>
-            </div>
-
-            {/* Expandable panel */}
             <ContactsPanel />
           </div>
         </section>
       </main>
 
-      <footer className="footer" data-scroll="fade-up">
+      <footer className="footer">
         <p className="text-xs uppercase tracking-[0.4em] text-stone-400">
           © 2025 · Keval Dave · Media innovation & data communication
         </p>
         <div className="flex gap-6 text-sm text-slate-600">
-          <a href="#top">Back to top</a>
-          <a href="mailto:kevaldave1112@gmail.com">Email me</a>
+          <a href="#top" onClick={(event) => handleNavClick(event, "#top")}>
+            Back to top
+          </a>
         </div>
       </footer>
     </div>
@@ -622,41 +598,28 @@ export function App() {
 
 export default App;
 
-// Local UI components for contact section
-function ExpandContactsButton() {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const panel = document.getElementById("contact-panel");
-    if (!panel) return;
-    panel.setAttribute("data-open", open ? "true" : "false");
-  }, [open]);
-
-  return (
-    <button
-      type="button"
-      className="contact-cta contact-cta--outline"
-      aria-expanded={open}
-      aria-controls="contact-panel"
-      onClick={() => setOpen((v) => !v)}
-    >
-      {open ? "Hide Contacts" : "Get In Touch"}
-    </button>
-  );
-}
-
 function ContactsPanel() {
   return (
-    <div
-      id="contact-panel"
-      className="contact-panel"
-      data-open="false"
-      data-scroll="fade-up"
-    >
+    <div className="contact-panel" data-scroll="fade-up">
+      <div className="contact-row" style={scrollDelay(0, 0.04)}>
+        <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
+          EXPERIENCE
+        </p>
+        <a
+          href={resumeResource.url}
+          target="_blank"
+          rel="noreferrer"
+          className="text-lg text-slate-800 underline"
+        >
+          Resume & background
+        </a>
+      </div>
+
       {contactChannels.map((channel, index) => (
         <div
           key={`${channel.label}-${channel.detail}`}
           className="contact-row"
-          style={scrollDelay(index, 0.04)}
+          style={scrollDelay(index + 1, 0.04)}
         >
           <p className="text-xs uppercase tracking-[0.35em] text-stone-500">
             {channel.label}
