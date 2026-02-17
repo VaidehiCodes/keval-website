@@ -1,9 +1,15 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+} from "react";
 import "./index.css";
 import resumePdf from "./assets/Keval's Resume (1).pdf";
 import newspaperPdf from "./assets/newspaper final.pdf";
 import memoPdf from "./assets/what should they do memo assignment keval (1) (3).docx - Google Docs.pdf";
 import dissertationPdf from "./assets/Disssertation.pdf";
+import portraitImage from "./assets/Polish_20220906_083617071.jpg.jpeg";
 
 const navLinks = [
   { label: "About me", href: "#top" },
@@ -160,11 +166,23 @@ const SectionHeading = ({
 );
 
 export function App() {
+  const handleNavClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith("#")) return;
+    event.preventDefault();
+    const targetId = href.slice(1);
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const elements = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-scroll]")
+      document.querySelectorAll<HTMLElement>("[data-scroll]"),
     );
     if (elements.length === 0) return;
 
@@ -182,7 +200,7 @@ export function App() {
         root: null,
         threshold: 0.2,
         rootMargin: "0px 0px -10% 0px",
-      }
+      },
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -205,6 +223,7 @@ export function App() {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(event) => handleNavClick(event, link.href)}
                 className="hover:text-slate-900 transition-colors"
               >
                 {link.label}
@@ -227,8 +246,8 @@ export function App() {
 
           <div className="hero-portrait" data-scroll="fade-left">
             <img
-              src="https://images.unsplash.com/photo-1503342250614-ca4407868a5b?auto=format&fit=crop&w=900&q=80"
-              alt="Studio mood"
+              src={portraitImage}
+              alt="Keval portrait"
               className="hero-portrait__image"
             />
             <div className="hero-portrait__card">
@@ -258,7 +277,7 @@ export function App() {
           <div className="space-y-12">
             {videoProjects.map((video, index) => {
               const idMatch = video.url?.match(
-                /(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/
+                /(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/,
               );
               const embedId = idMatch ? idMatch[1] : null;
               const embedSrc = embedId
@@ -398,7 +417,7 @@ export function App() {
           <div className="space-y-12">
             {audioStories.map((story, index) => {
               const embedSrc = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
-                story.url || ""
+                story.url || "",
               )}&visual=true`;
               const flip = index % 2 === 1; // alternate side for every second item
 
